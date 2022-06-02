@@ -1,0 +1,5 @@
+[Azure-HPC]
+name=Azure HPC applications - CentOS7 - avx512
+baseurl=https://azhpcrepo.blob.core.windows.net/easybuild-avx512
+enabled=1
+gpgcheck=0
