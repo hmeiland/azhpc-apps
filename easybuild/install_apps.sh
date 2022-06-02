@@ -21,12 +21,8 @@ export EASYBUILD_PACKAGEPATH=/easybuildrepo
 export EASYBUILD_REPOSITORYPATH=~/.local/easybuild/easyconfigs
 export EASYBUILD_SOURCEPATH=/easybuildrepo/sources
 
-if [[ ! -d /apps ]]; then
-  mkdir -p /mnt/resource${EASYBUILD_PREFIX}
-  sudo mkdir -p /apps/easybuild/${os}
-  sudo chmod 777 /apps/easybuild/${os}
-  ln -s /mnt/resource${EASYBUILD_PREFIX} ${EASYBUILD_PREFIX}
-fi
+sudo chmod 777 /apps
+mkdir -p ${EASYBUILD_PREFIX}
 
 eb ${EASYBUILD_REPOSITORYPATH}/f/FPM/FPM-1.3.3-Ruby-2.1.6.eb --robot
 module use ${EASYBUILD_PREFIX}/modules/all
