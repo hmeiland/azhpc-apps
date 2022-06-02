@@ -4,13 +4,13 @@ arch=generic
 os=not_defined
 
 vm_sku=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" | jq -r '.compute'.'vmSize')
-if [[ vm_sku == "Standard_HC44rs" ]]; then
+if [[ $vm_sku == "Standard_HC44rs" ]]; then
         arch=avx_512
 fi
 
 if [[ -f /etc/redhat-release ]]; then
 	redhat_version=$(cat /etc/redhat-release)
-	if [[ redhat_version == "CentOS Linux release 7.9.2009 (Core)" ]]; then
+	if [[ $redhat_version == "CentOS Linux release 7.9.2009 (Core)" ]]; then
 		os=el7
 	fi
 fi
