@@ -6,7 +6,7 @@ Summary:        Repository configuration for AzureHPC applications
 Group:          system
 License:        Microsoft Open Source
 URL:            https://github.com/hmeiland/azure-apps
-Source0:        azurehpc-repo.tar
+Source0:        azurehpc-application-repo.tar
 BuildArch:      noarch
 
 #BuildRequires:
@@ -18,7 +18,7 @@ BuildArch:      noarch
 %prep
 echo "BUILDROOT = $RPM_BUILD_ROOT"
 mkdir -p $RPM_BUILD_ROOT/etc/yum.repos.d
-cp $RPM_BUILD_ROOT/../../SOURCES/azure-hpc.repo $RPM_BUILD_ROOT/etc/yum.repos.d/azurehpc-application.repo
+cp $RPM_BUILD_ROOT/../../SOURCES/azurehpc-application.repo $RPM_BUILD_ROOT/etc/yum.repos.d/azurehpc-application.repo
 exit
 
 %files
