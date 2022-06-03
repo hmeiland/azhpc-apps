@@ -6,6 +6,8 @@ os=not_defined
 vm_sku=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" | jq -r '.compute'.'vmSize')
 if [[ $vm_sku == "Standard_HC44rs" ]]; then
         arch=hc
+elif [[ $vm_sku == "Standard_HB60rs" ]]; then
+        arch=hb
 fi
 
 if [[ -f /etc/redhat-release ]]; then
@@ -23,6 +25,7 @@ export EASYBUILD_SOURCEPATH=/easybuildrepo/sources
 
 sudo chmod 777 /apps
 mkdir -p ${EASYBUILD_PREFIX}
+mkdir -p ${EASYBUILD_PACKAGEPATH}
 
 eb ${EASYBUILD_REPOSITORYPATH}/f/FPM/FPM-1.3.3-Ruby-2.1.6.eb --robot
 module use ${EASYBUILD_PREFIX}/modules/all
