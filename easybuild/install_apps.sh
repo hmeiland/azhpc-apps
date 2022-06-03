@@ -5,19 +5,19 @@ os=not_defined
 
 vm_sku=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" | jq -r '.compute'.'vmSize')
 if [[ $vm_sku == "Standard_HC44rs" ]]; then
-        arch=avx_512
+        arch=hc
 fi
 
 if [[ -f /etc/redhat-release ]]; then
 	redhat_version=$(cat /etc/redhat-release)
 	if [[ $redhat_version == "CentOS Linux release 7.9.2009 (Core)" ]]; then
-		os=el7
+		os=centos7
 	fi
 fi
 
 export EASYBUILD_PREFIX=/apps/easybuild/${os}/${arch}
 echo using prefix ${EASYBUILD_PREFIX}
-export EASYBUILD_PACKAGEPATH=/easybuildrepo
+export EASYBUILD_PACKAGEPATH=/easybuildrepo/${os}/${arch}
 export EASYBUILD_REPOSITORYPATH=~/.local/easybuild/easyconfigs
 export EASYBUILD_SOURCEPATH=/easybuildrepo/sources
 
