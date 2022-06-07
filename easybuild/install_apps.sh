@@ -26,6 +26,7 @@ export EASYBUILD_SOURCEPATH=/easybuildrepo/sources
 sudo chmod 777 /apps
 mkdir -p ${EASYBUILD_PREFIX}
 mkdir -p ${EASYBUILD_PACKAGEPATH}
+mkdir -p /easybuildrepo/repo /easybuildrepo/init
 
 eb ${EASYBUILD_REPOSITORYPATH}/f/FPM/FPM-1.3.3-Ruby-2.1.6.eb --robot
 module use ${EASYBUILD_PREFIX}/modules/all
@@ -79,3 +80,6 @@ eb --package ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --skip --r
 
 
 createrepo ${EASYBUILD_PACKAGEPATH}
+
+repo/make-rpm.sh
+cp repo/*.rpm /easybuildrepo/repo
