@@ -79,6 +79,9 @@ eb --package ${EASYBUILD_REPOSITORYPATH}/s/ScaLAPACK/ScaLAPACK-2.1.0-gompi-2020a
 eb --package ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
 
 
+eb ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+eb --package ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+
 createrepo ${EASYBUILD_PACKAGEPATH}
 
 repo/make-rpm.sh
