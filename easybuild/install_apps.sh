@@ -32,7 +32,15 @@ eb ${EASYBUILD_REPOSITORYPATH}/f/FPM/FPM-1.3.3-Ruby-2.1.6.eb --robot
 module use ${EASYBUILD_PREFIX}/modules/all
 ml load FPM/1.3.3-Ruby-2.1.6
 
+# foss-2020a toolchain
 eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+foss-2020a_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --dry-run | grep module | grep -v "[x]" | awk '{print $4}'})
+for package in foss-2020a_packages; do
+  eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+done
+
+exit
+
 eb --package ${EASYBUILD_REPOSITORYPATH}/m/M4/M4-1.4.19.eb --skip --rebuild --allow-loaded-modules=Ruby,FPM 
 eb --package ${EASYBUILD_REPOSITORYPATH}/b/Bison/Bison-3.8.2.eb --skip --rebuild --allow-loaded-modules=Ruby,FPM
 eb --package ${EASYBUILD_REPOSITORYPATH}/f/flex/flex-2.6.4.eb --skip --rebuild --allow-loaded-modules=Ruby,FPM
@@ -78,9 +86,17 @@ eb --package ${EASYBUILD_REPOSITORYPATH}/f/FFTW/FFTW-3.3.8-gompi-2020a.eb --skip
 eb --package ${EASYBUILD_REPOSITORYPATH}/s/ScaLAPACK/ScaLAPACK-2.1.0-gompi-2020a.eb --skip --rebuild --allow-loaded-modules=Ruby,FPM
 eb --package ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
 
-
+# osu benchmarks
 eb ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
 eb --package ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+
+# openfoam
+eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+openfoam_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --dry-run | grep module | grep -v "[x]" | awk '{print $4}'})
+for package in openfoam_packages; do
+  eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+done
+
 
 createrepo ${EASYBUILD_PACKAGEPATH}
 
