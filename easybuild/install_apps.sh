@@ -34,8 +34,8 @@ ml load FPM/1.3.3-Ruby-2.1.6
 
 # foss-2020a toolchain
 eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
-foss-2020a_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --dry-run | grep module | awk '{print $3}')
-for package in $foss-2020a_packages; do
+foss2020a_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --dry-run | grep module | awk '{print $3}')
+for package in $foss2020a_packages; do
   eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
 done
 
