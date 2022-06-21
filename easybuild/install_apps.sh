@@ -19,7 +19,8 @@ fi
 
 export EASYBUILD_PREFIX=/apps/easybuild/${os}/${arch}
 echo using prefix ${EASYBUILD_PREFIX}
-export EASYBUILD_PACKAGEPATH=/easybuildrepo/${os}/${arch}
+#export EASYBUILD_PACKAGEPATH=/easybuildrepo/${os}/${arch}
+export EASYBUILD_PACKAGEPATH=/apps/repo/${os}/${arch}
 export EASYBUILD_REPOSITORYPATH=~/.local/easybuild/easyconfigs
 export EASYBUILD_SOURCEPATH=/easybuildrepo/sources
 
@@ -32,8 +33,14 @@ eb ${EASYBUILD_REPOSITORYPATH}/f/FPM/FPM-1.3.3-Ruby-2.1.6.eb --robot
 module use ${EASYBUILD_PREFIX}/modules/all
 ml load FPM/1.3.3-Ruby-2.1.6
 
-# foss-2020a toolchain
+#build apps
 eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+eb ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+
+
+# build packages
+# foss-2020a toolchain
 foss2020a_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --dry-run | grep module | awk '{print $3}')
 for package in $foss2020a_packages; do
   echo eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
@@ -41,11 +48,9 @@ for package in $foss2020a_packages; do
 done
 
 # osu benchmarks
-eb ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
 eb --package ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
 
 # openfoam
-eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
 openfoam_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --dry-run | grep module | awk '{print $3}')
 for package in $openfoam_packages; do
   echo eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
@@ -58,11 +63,11 @@ for package in $openfoam_packages; do
   else
     eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
   fi
-  #--try-amend=start_dir=/home/hpcadmin/.local/easybuild/build/Tcl/8.6.10/GCCcore-9.3.0
 done
 
 
-createrepo ${EASYBUILD_PACKAGEPATH}
+cp -r ${EASYBUILD_PACKAGEPATH}/*.rpm /easybuildrepo/${os}/${arch}
+createrepo /easybuildrepo/${os}/${arch}/
 
 repo/make-rpm.sh
 cp repo/*.rpm /easybuildrepo/repo
