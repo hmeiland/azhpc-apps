@@ -36,7 +36,7 @@ ml load FPM/1.3.3-Ruby-2.1.6
 #build apps
 eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
 eb ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
-eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
+eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources --force
 
 
 # build packages
@@ -55,11 +55,13 @@ openfoam_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-fos
 for package in $openfoam_packages; do
   echo eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
   if [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/Tcl/Tcl-8.6.10-GCCcore-9.3.0.eb" ]]; then
-    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/home/hpcadmin/.local/easybuild/build/Tcl/8.6.10/GCCcore-9.3.0
+    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/Tcl/8.6.10/GCCcore-9.3.0
   elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/ICU/ICU-66.1-GCCcore-9.3.0.eb" ]]; then
-    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/centos7/hc/build/ICU/66.1/GCCcore-9.3.0
+    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/ICU/66.1/GCCcore-9.3.0
   elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/x265/x265-3.3-GCCcore-9.3.0.eb" ]]; then
-    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/centos7/hc/build/x265/3.3/GCCcore-9.3.0
+    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/x265/3.3/GC2Ccore-9.3.0
+  elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb" ]]; then
+    eb --package ${package} --robot --rebuild --allow-loaded-modules=Ruby,FPM --force
   else
     eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
   fi
