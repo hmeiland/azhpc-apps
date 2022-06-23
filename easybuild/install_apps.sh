@@ -37,6 +37,7 @@ ml load FPM/1.3.3-Ruby-2.1.6
 eb ${EASYBUILD_REPOSITORYPATH}/f/foss/foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
 eb ${EASYBUILD_REPOSITORYPATH}/o/OSU-Micro-Benchmarks/OSU-Micro-Benchmarks-5.6.3-gompi-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources
 eb ${EASYBUILD_REPOSITORYPATH}/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources --force
+eb ${EASYBUILD_REPOSITORYPATH}/g/GROMACS/GROMACS-2020.1-foss-2020a-Python-3.8.2.eb --robot --allow-loaded-modules=Ruby,FPM --sourcepath=/easybuildrepo/sources --force
 
 
 # build packages
@@ -68,6 +69,12 @@ for package in $openfoam_packages; do
   fi
 done
 
+# gromacs
+gromacs_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/g/GROMACS/GROMACS-2020.1-foss-2020a-Python-3.8.2.eb --robot --dry-run | grep module | awk '{print $3}')
+for package in $gromacs_packages; do
+  echo eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+  eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+done
 
 cp -r ${EASYBUILD_PACKAGEPATH}/*.rpm /easybuildrepo/${os}/${arch}
 createrepo /easybuildrepo/${os}/${arch}/
