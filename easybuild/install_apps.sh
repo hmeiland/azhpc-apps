@@ -59,7 +59,8 @@ for package in $openfoam_packages; do
   elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/ICU/ICU-66.1-GCCcore-9.3.0.eb" ]]; then
     eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/ICU/66.1/GCCcore-9.3.0
   elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/x265/x265-3.3-GCCcore-9.3.0.eb" ]]; then
-    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/x265/3.3/GC2Ccore-9.3.0
+    #eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/x265/3.3/GC2Ccore-9.3.0
+    eb --package ${package} --robot --rebuild --allow-loaded-modules=Ruby,FPM --force
   elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/o/OpenFOAM/OpenFOAM-v2012-foss-2020a.eb" ]]; then
     eb --package ${package} --robot --rebuild --allow-loaded-modules=Ruby,FPM --force
   else
