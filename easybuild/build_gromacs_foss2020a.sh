@@ -55,8 +55,13 @@ eb ${EASYBUILD_REPOSITORYPATH}/g/GROMACS/GROMACS-2020.1-foss-2020a-Python-3.8.2.
 # gromacs
 gromacs_packages=$(eb ${EASYBUILD_REPOSITORYPATH}/g/GROMACS/GROMACS-2020.1-foss-2020a-Python-3.8.2.eb --robot --dry-run | grep module | awk '{print $3}')
 for package in $gromacs_packages; do
-  echo eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
-  eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+  if [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/Tcl/Tcl-8.6.10-GCCcore-9.3.0.eb" ]]; then
+    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM --try-amend=start_dir=/apps/easybuild/${os}/${arch}/build/Tcl/8.6.10/GCCcore-9.3.0
+  elif [[ ${package} == "/home/hpcadmin/.local/easybuild/easyconfigs/g/GROMACS/GROMACS-2020.1-foss-2020a-Python-3.8.2.eb" ]]; then
+    eb --package ${package} --robot --rebuild --allow-loaded-modules=Ruby,FPM --force
+  else
+    eb --package ${package} --robot --skip --rebuild --allow-loaded-modules=Ruby,FPM
+  fi
 done
 
 cp -r ${EASYBUILD_PACKAGEPATH}/*.rpm /easybuildrepo/${os}/${arch}
