@@ -27,7 +27,7 @@ else
 fi
 
 
-if [[ ! -f /apps/easybuild/${os}/{$arch}/modules/all/foss/2020a.lua ]]; then
+if [[ ! -f /apps/easybuild/${os}/${arch}/modules/all/foss/2020a.lua ]]; then
 	echo "toolchain not found: please install first"
 	exit
 fi
