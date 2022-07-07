@@ -8,6 +8,8 @@ if [[ $vm_sku == "Standard_HC44rs" ]]; then
         arch=hc
 elif [[ $vm_sku == "Standard_HB60rs" ]]; then
         arch=hb
+elif [[ $vm_sku == "Standard_HB120rs_v2" ]]; then
+        arch=hbv2
 else
     echo "sku not found"
     exit
