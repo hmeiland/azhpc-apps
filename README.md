@@ -18,4 +18,7 @@ sudo yum install --enablerepo=azurehpc-centos7-hc foss-2020a
 ```
 sudo yum install --enablerepo=azurehpc-centos7-hb foss-2020a
 ```
+```
+sudo yum install --enablerepo=azurehpc-centos7-hbv2 foss-2020a
+```
 

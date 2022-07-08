@@ -9,3 +9,9 @@ name=Azure HPC applications - CentOS7 - HB
 baseurl=https://azhpcrepo.blob.core.windows.net/easybuild/centos7/hb
 enabled=0
 gpgcheck=0
+
+[azurehpc-centos7-hbv2]
+name=Azure HPC applications - CentOS7 - HBv2
+baseurl=https://azhpcrepo.blob.core.windows.net/easybuild/centos7/hbv2
+enabled=0
+gpgcheck=0
